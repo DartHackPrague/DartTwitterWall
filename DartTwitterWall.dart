@@ -23,7 +23,7 @@ void printTweets() {
     
     for ( Tweet tweet in tweets ) {
       print( tweet.text );
-      print( '-- \n from ' + tweet.userName + ' at ' + tweet.timeAgo );
+      print( '-- \n @' + tweet.userName + ' ' + tweet.timeAgo );
       print( '\n' );
     }
     
