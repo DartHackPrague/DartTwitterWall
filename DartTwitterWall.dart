@@ -30,7 +30,7 @@ void printTweets( String hashTag ) {
   TwitterApi api = new TwitterApi(searchQuery:hashTag);
   int tweetHeight = 4;
   int terminalWidth = 139;
-  int terminalHeight = 20;
+  int terminalHeight = 28;
   
   api.getTweets().then( ( List<Tweet> tweets ) {
     printHeader();
