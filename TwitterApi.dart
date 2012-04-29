@@ -111,15 +111,11 @@ String timeAgoFromCreatedAt(String createdAt) {
     return "1 hour and ${diff.inMinutes} minutes ago";
   } else if (diff.inMinutes > 0) {
     return "${diff.inMinutes} minutes ago";
-  } else if (diff.inSeconds > 10) {
+  } else if (diff.inSeconds > 20) {
     return "${diff.inSeconds} seconds ago";
   } else {
     return "just now";
   }
 
   return "$date";
-  //Date date = new Date.fromString(createdAt);
-  //return date.hours.toString();
-
-  //return "not yet implemented";
 }
