@@ -31,8 +31,8 @@ void printTweets( String hashTag ) {
   int tweetHeight = 4;
   int terminalWidth = 139;
   int terminalHeight = 28;
-  
-  api.getTweets().then( ( List<Tweet> tweets ) {
+
+  api.getTweets(max:7).then( ( List<Tweet> tweets ) {
     printHeader();
 
     int remainingLength = 24;
