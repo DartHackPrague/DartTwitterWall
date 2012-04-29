@@ -44,6 +44,7 @@ class TwitterApi {
     .then((String json) {
       if (json == null) {
         completer.complete([]);
+        return;
       }
       Map<String,Dynamic> output = JSON.parse( json );
       List<Map<String,Dynamic>> results = output["results"];
@@ -78,10 +79,9 @@ class TwitterApi {
 }
 
 String timeAgoFromCreatedAt(String createdAt) {
-  /*
-  RegExp dateMatch = new RegExp();
-  Date date = new Date.fromString(createdAt);
-  return date.hours.toString();
-  */
+  //RegExp dateMatch = new RegExp();
+  //Date date = new Date.fromString(createdAt);
+  //return date.hours.toString();
+
   return "not yet implemented";
 }
