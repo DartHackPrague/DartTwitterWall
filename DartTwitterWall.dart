@@ -1,4 +1,6 @@
-#source("TwitterApi.dart");
+#library('twitter_wall');
+
+#import("TwitterApi.dart");
 
 void main() {
   TwitterApi api = new TwitterApi();

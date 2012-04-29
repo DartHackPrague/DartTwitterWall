@@ -1,12 +1,13 @@
-#library("TwitterApi");
+#library("twitterApi");
 
 #import('dart:io');
 #import('dart:uri');
 #import('dart:json');
 
 class Tweet {
-
-
+  String userName;
+  String text;
+  String createdAt;
 
 }
 
