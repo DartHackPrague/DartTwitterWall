@@ -12,14 +12,20 @@ void main() {
 }
 
 void printTweets() {
-  TwitterApi api = new TwitterApi();
+  String hashTag = "darthack12";
+  TwitterApi api = new TwitterApi(searchQuery:hashTag);
   int tweetHeight = 4;
   int terminalWidth = 139;
   int terminalHeight = 20;
   
   api.getTweets().then( ( List<Tweet> tweets ) {
     printHeader();
-    print( 'NOW: ' + new Date.now() + "\n" );
+    
+    int remainingLength = 24;
+    print( repeat(" ", 20) + "." + repeat( "-", 60 ) + "." );
+    print( repeat(" ", 20) + '|  NOW: ' + new Date.now() + "  |  #"
+      + hashTag + repeat( " ", remainingLength - hashTag.length ) + "|" );
+    print( repeat(" ", 20) + "\\" + repeat( "-", 60 ) + "/" );
     
     for ( Tweet tweet in tweets ) {
       print( tweet.text );
