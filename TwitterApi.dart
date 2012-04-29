@@ -14,9 +14,8 @@ class Tweet {
     userName = map["from_user"];
     text = map["text"];
     createdAt = map["created_at"];
-    timeAgo = "not yet implemented";
+    timeAgo = timeAgoFromCreatedAt(createdAt);
   }
-
 }
 
 class TwitterApi {
@@ -76,5 +75,13 @@ class TwitterApi {
 
     return completer.future;
   }
+}
 
+String timeAgoFromCreatedAt(String createdAt) {
+  /*
+  RegExp dateMatch = new RegExp();
+  Date date = new Date.fromString(createdAt);
+  return date.hours.toString();
+  */
+  return "not yet implemented";
 }
