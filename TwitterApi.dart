@@ -41,6 +41,9 @@ class TwitterApi {
 
     fetchJsonString('$searchUrlPrefix$searchQuery')
     .then((String json) {
+      if (json == null) {
+        completer.complete([]);
+      }
       Map<String,Dynamic> output = JSON.parse( json );
       List<Map<String,Dynamic>> results = output["results"];
 
