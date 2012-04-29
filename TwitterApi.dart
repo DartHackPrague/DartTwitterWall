@@ -14,7 +14,7 @@ class Tweet {
 class TwitterApi {
 
   final String searchUrlPrefix = "http://search.twitter.com/search.json?q=";
-  String searchQuery = const "darthack12";
+  String searchQuery = "darthack12";
 
   HttpClient _client;
   Uri _uri;
@@ -43,24 +43,24 @@ class TwitterApi {
   }
 
   Future<List<Tweet>> getTweetsTEMP([int max=5]) {
+    Completer completer = new Completer();
     fetchJsonString('$searchUrlPrefix$searchQuery');
 
 
-    return [new Tweet()];
+    return completer.future;
+    // return new Future.immediate([new Tweet()]);
   }
 
   Future<String> fetchJsonString(String url) {
+    Completer completer = new Completer();
+
     _uri = new Uri.fromString( url );
     _conn = client.getUrl(streamUrl);
-  }
 
-  void printRecentTweets(HttpClient client) {
+    _conn.onResponse = (HttpClientResponse response) {
+      _stringInputStream = new StringInputStream( response.inputStream );
 
-    conn.onResponse = (HttpClientResponse response) {
-      inputStream = response.inputStream;
-      lines = new StringInputStream( inputStream );
-
-      lines.onLine = () {
+      _stringInputStream.onLine = () {
         String stream = lines.readLine();
         Map<String,Dynamic> output = JSON.parse( stream );
 
@@ -71,17 +71,10 @@ class TwitterApi {
             results[i]['from_user_name'] + ' at ' + results[i]["created_at"] +
             "\n-------------------");
         }
-
-        inputStream.close();
       };
     };
 
-
+    return completer.future;
   }
-
-  void init() {
-
-  }
-
 
 }
