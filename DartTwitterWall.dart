@@ -11,7 +11,7 @@ void main() {
     String hashTag = options.arguments[0];
 
     printTweets( hashTag );
-    Timer timer = new Timer.repeating( 5000, (Timer timer) {
+    Timer timer = new Timer.repeating( 15000, (Timer timer) {
       printTweets( hashTag );
     });
 
@@ -40,11 +40,15 @@ void printTweets( String hashTag ) {
     print( repeat(" ", 20) + '|  NOW: ' + new Date.now() + "  |  #"
       + hashTag + repeat( " ", remainingLength - hashTag.length ) + "|" );
     print( repeat(" ", 20) + "\\" + repeat( "-", 60 ) + "/\n" );
-
+    
+    int i = 1;
     for ( Tweet tweet in tweets ) {
       print( tweet.text );
       print( "-- \n @" + tweet.userName + ' ' + tweet.timeAgo );
-      print( '\n' );
+      if ( i < tweets.length ) {
+        print( '\n' );
+      }
+      i++;
     }
 
     print( repeat( "\n", terminalHeight - tweetHeight * tweets.length ) );
@@ -52,14 +56,12 @@ void printTweets( String hashTag ) {
 }
 
 void printHeader() {
-  print( @"""  
-  ________                 __ ___________       .__  __    __                __      __        .__  .__   
+  print( @"""  ________                 __ ___________       .__  __    __                __      __        .__  .__   
   \______ \ _____ ________/  |\__    ___/_  _  _|__|/  |__/  |_  ___________/  \    /  \_____  |  | |  |  
    |    |  \\__  \\_  __ \   __\|    |  \ \/ \/ /  \   __\   __\/ __ \_  __ \   \/\/   /\__  \ |  | |  |  
    |    `   \/ __ \|  | \/|  |  |    |   \     /|  ||  |  |  | \  ___/|  | \/\        /  / __ \|  |_|  |__
   /_______  (____  /__|   |__|  |____|    \/\_/ |__||__|  |__|  \___  >__|    \__/\  /  (____  /____/____/
-          \/     \/                                                 \/             \/        \/           
-""" );
+          \/     \/                                                 \/             \/        \/           """ );
 }
 
 String repeat( String char, int lines ) {
