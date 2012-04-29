@@ -13,28 +13,48 @@ class Tweet {
 
 class TwitterApi {
 
-  List<Tweet> getTweets([int max=5]) {
+  final String searchUrlPrefix = "http://search.twitter.com/search.json?q=";
+  String searchQuery = const "darthack12";
+
+  HttpClient _client;
+  Uri _uri;
+  HttpClientConnection _conn;
+  InputStream _inputStream;
+  StringInputStream _stringInputStream;
+
+  // Ctor
+  TwitterApi() {
+    _client = new HttpClient();
+
+
+  }
+
+  void close() {
+    _client.shutdown();
+  }
+
+  Future<List<Tweet>> getTweets([int max=5]) {
     Tweet tw = new Tweet();
     tw.userName = "filiphracek";
     tw.text = "This is a mock tweet";
     tw.createdAt = "Sunday....";
 
-    return [tw];
+    return new Future.immediate([tw]);
+  }
+
+  Future<List<Tweet>> getTweetsTEMP([int max=5]) {
+    fetchJsonString('$searchUrlPrefix$searchQuery');
+
+
+    return [new Tweet()];
+  }
+
+  Future<String> fetchJsonString(String url) {
+    _uri = new Uri.fromString( url );
+    _conn = client.getUrl(streamUrl);
   }
 
   void printRecentTweets(HttpClient client) {
-
-
-    Uri streamUrl = new Uri.fromString(
-      'http://search.twitter.com/search.json?q=darthack12'
-    );
-
-    HttpClientConnection conn = client.getUrl(streamUrl);
-
-    List<int> buffer = new List();
-
-    InputStream inputStream;
-    StringInputStream lines;
 
     conn.onResponse = (HttpClientResponse response) {
       inputStream = response.inputStream;
@@ -60,11 +80,7 @@ class TwitterApi {
   }
 
   void init() {
-    HttpClient client = new HttpClient();
 
-
-    printRecentTweets(client);
-    client.shutdown();
   }
 
 

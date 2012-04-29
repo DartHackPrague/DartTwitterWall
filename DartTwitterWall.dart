@@ -6,7 +6,6 @@
 
 void main() {
   TwitterApi api = new TwitterApi();
-  
   Timer timer = new Timer.repeating( 250, (Timer timer) {
     api.getTweets().then( ( List<Tweet> tweets ) {
       for ( Tweet tweet in tweets ) {
