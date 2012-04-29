@@ -4,15 +4,29 @@
 #import('dart:io');
 #import('dart:core');
 
-void main() {
-  printTweets();
-  Timer timer = new Timer.repeating( 5000, (Timer timer) {
-    printTweets();
-  });
+void main() {  
+  Options options = new Options();
+  try {
+    validateInput( options.arguments );
+    String hashTag = options.arguments[0];
+
+    printTweets( hashTag );
+    Timer timer = new Timer.repeating( 5000, (Timer timer) {
+      printTweets( hashTag );
+    });
+    
+  } catch ( IllegalArgumentException e ) {
+    print( "Usage: dart DartTwitterWall.dart hashtag" );
+  }
 }
 
-void printTweets() {
-  String hashTag = "darthack12";
+void validateInput( List options ) {
+  if ( options.length < 1 ) {
+    throw new IllegalArgumentException();
+  }
+}
+
+void printTweets( String hashTag ) {
   TwitterApi api = new TwitterApi(searchQuery:hashTag);
   int tweetHeight = 4;
   int terminalWidth = 139;
@@ -29,7 +43,7 @@ void printTweets() {
     
     for ( Tweet tweet in tweets ) {
       print( tweet.text );
-      print( '-- \n @' + tweet.userName + ' ' + tweet.timeAgo );
+      print( "-- \n @" + tweet.userName + ' ' + tweet.timeAgo );
       print( '\n' );
     }
     
