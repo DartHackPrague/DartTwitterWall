@@ -2,8 +2,8 @@
 #import('dart:uri');
 #import('dart:json');
 
-void main() {
-  HttpClient client = new HttpClient();
+void printRecentTweets(HttpClient client) {
+
 
   Uri streamUrl = new Uri.fromString(
     'http://search.twitter.com/search.json?q=darthack12'
@@ -32,15 +32,16 @@ void main() {
           "\n-------------------");
       }
 
+      inputStream.close();
     };
-
-    lines.onClosed = () {
-
-    };
-
-
-
   };
 
+
+}
+
+
+void main() {
+  HttpClient client = new HttpClient();
+  printRecentTweets(client);
   client.shutdown();
 }
