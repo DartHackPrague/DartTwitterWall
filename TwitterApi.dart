@@ -8,11 +8,13 @@ class Tweet {
   String userName;
   String text;
   String createdAt;
+  String timeAgo;
 
   Tweet.fromMap(Map<String,Dynamic> map) {
-    userName = map["from_user_name"];
+    userName = map["from_user"];
     text = map["text"];
     createdAt = map["created_at"];
+    timeAgo = "not yet implemented";
   }
 
 }
