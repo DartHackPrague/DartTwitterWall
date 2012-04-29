@@ -40,7 +40,7 @@ void printTweets( String hashTag ) {
     print( repeat(" ", 20) + '|  NOW: ' + new Date.now() + "  |  #"
       + hashTag + repeat( " ", remainingLength - hashTag.length ) + "|" );
     print( repeat(" ", 20) + "\\" + repeat( "-", 60 ) + "/\n" );
-    
+
     int i = 1;
     for ( Tweet tweet in tweets ) {
       print( tweet.text );
@@ -65,9 +65,10 @@ void printHeader() {
 }
 
 String repeat( String char, int lines ) {
-  String wholeString = '';
+  StringBuffer strBuf = new StringBuffer();
+
   for(int i = 0; i <= lines; i++) {
-    wholeString += char;
+    strBuf.add(char);
   }
-  return wholeString;
+  return strBuf.toString();
 }
