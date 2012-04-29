@@ -9,12 +9,17 @@ class Tweet {
   String text;
   String createdAt;
 
+  Tweet.fromMap(Map<String,Dynamic> map) {
+    userName = map["from_user_name"];
+    text = map["text"];
+    createdAt = map["created_at"];
+  }
+
 }
 
 class TwitterApi {
-
   final String searchUrlPrefix = "http://search.twitter.com/search.json?q=";
-  String searchQuery = "darthack12";
+  String searchQuery;
 
   HttpClient _client;
   Uri _uri;
@@ -23,10 +28,8 @@ class TwitterApi {
   StringInputStream _stringInputStream;
 
   // Ctor
-  TwitterApi() {
+  TwitterApi([String this.searchQuery="darthack12"]) {
     _client = new HttpClient();
-
-
   }
 
   void close() {
@@ -34,43 +37,35 @@ class TwitterApi {
   }
 
   Future<List<Tweet>> getTweets([int max=5]) {
-    Tweet tw = new Tweet();
-    tw.userName = "filiphracek";
-    tw.text = "This is a mock tweet";
-    tw.createdAt = "Sunday....";
-
-    return new Future.immediate([tw]);
-  }
-
-  Future<List<Tweet>> getTweetsTEMP([int max=5]) {
     Completer completer = new Completer();
-    fetchJsonString('$searchUrlPrefix$searchQuery');
 
+    fetchJsonString('$searchUrlPrefix$searchQuery')
+    .then((String json) {
+      Map<String,Dynamic> output = JSON.parse( json );
+      List<Map<String,Dynamic>> results = output["results"];
+
+      List<Tweet> tweets = new List<Tweet>();
+      for (int i = 0; i < Math.min(max, results.length); i++) {
+        tweets.add(new Tweet.fromMap(results[i]));
+      }
+      completer.complete(tweets);
+    });
 
     return completer.future;
-    // return new Future.immediate([new Tweet()]);
   }
 
   Future<String> fetchJsonString(String url) {
     Completer completer = new Completer();
 
     _uri = new Uri.fromString( url );
-    _conn = client.getUrl(streamUrl);
+    _conn = _client.getUrl(_uri);
 
     _conn.onResponse = (HttpClientResponse response) {
       _stringInputStream = new StringInputStream( response.inputStream );
 
       _stringInputStream.onLine = () {
-        String stream = lines.readLine();
-        Map<String,Dynamic> output = JSON.parse( stream );
-
-        List<Map<String,Dynamic>> results = output["results"];
-
-        for ( int i = 0; i < 5; i++) {
-          print( results[i]['text'] + '\n from ' +
-            results[i]['from_user_name'] + ' at ' + results[i]["created_at"] +
-            "\n-------------------");
-        }
+        String stream = _stringInputStream.readLine();
+        completer.complete(stream);
       };
     };
 
