@@ -36,17 +36,18 @@ void printTweets( String hashTag ) {
     printHeader();
 
     int remainingLength = 24;
-    print( repeat(" ", 20) + "." + repeat( "-", 60 ) + "." );
-    print( repeat(" ", 20) + '|  NOW: ' + new Date.now() + "  |  #"
-      + hashTag + repeat( " ", remainingLength - hashTag.length ) + "|" );
-    print( repeat(" ", 20) + "\\" + repeat( "-", 60 ) + "/\n" );
+    print( "${repeat(' ', 20)}.${repeat('-', 60)}." );
+    print( "${repeat(' ', 20)}|  NOW: ${new Date.now()}  "
+           "|  #$hashTag${repeat( ' ', remainingLength - hashTag.length )}|"
+    );
+    print( "${repeat(' ', 20)}\\${repeat( '-', 60 )}/\n" );
 
     int i = 1;
     for ( Tweet tweet in tweets ) {
       print( tweet.text );
-      print( "-- \n @" + tweet.userName + ' ' + tweet.timeAgo );
+      print( "-- \n @${tweet.userName} ${tweet.timeAgo}" );
       if ( i < tweets.length ) {
-        print( '\n' );
+        print( "\n" );
       }
       i++;
     }
