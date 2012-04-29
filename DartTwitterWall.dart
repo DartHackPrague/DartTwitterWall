@@ -4,5 +4,9 @@
 
 void main() {
   TwitterApi api = new TwitterApi();
-  List<Tweet> tweets = api.getTweets(max:5);
+
+  api.getTweets().then((List<Tweet> tweets) {
+
+
+  });
 }
