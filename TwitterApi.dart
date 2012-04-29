@@ -71,6 +71,7 @@ class TwitterApi {
       _stringInputStream.onLine = () {
         String stream = _stringInputStream.readLine();
         completer.complete(stream);
+        response.inputStream.close();
       };
     };
 
