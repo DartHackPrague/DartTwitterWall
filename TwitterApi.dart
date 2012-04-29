@@ -13,6 +13,15 @@ class Tweet {
 
 class TwitterApi {
 
+  List<Tweet> getTweets([int max=5]) {
+    Tweet tw = new Tweet();
+    tw.userName = "filiphracek";
+    tw.text = "This is a mock tweet";
+    tw.createdAt = "Sunday....";
+
+    return [tw];
+  }
+
   void printRecentTweets(HttpClient client) {
 
 
