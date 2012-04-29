@@ -116,6 +116,4 @@ String timeAgoFromCreatedAt(String createdAt) {
   } else {
     return "just now";
   }
-
-  return "$date";
 }

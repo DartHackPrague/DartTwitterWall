@@ -4,7 +4,7 @@
 #import('dart:io');
 #import('dart:core');
 
-void main() {  
+void main() {
   Options options = new Options();
   try {
     validateInput( options.arguments );
@@ -14,7 +14,7 @@ void main() {
     Timer timer = new Timer.repeating( 5000, (Timer timer) {
       printTweets( hashTag );
     });
-    
+
   } catch ( IllegalArgumentException e ) {
     print( "Usage: dart DartTwitterWall.dart hashtag" );
   }
@@ -31,22 +31,22 @@ void printTweets( String hashTag ) {
   int tweetHeight = 4;
   int terminalWidth = 139;
   int terminalHeight = 20;
-  
-  api.getTweets().then( ( List<Tweet> tweets ) {
+
+  api.getTweets(max:7).then( ( List<Tweet> tweets ) {
     printHeader();
-    
+
     int remainingLength = 24;
     print( repeat(" ", 20) + "." + repeat( "-", 60 ) + "." );
     print( repeat(" ", 20) + '|  NOW: ' + new Date.now() + "  |  #"
       + hashTag + repeat( " ", remainingLength - hashTag.length ) + "|" );
-    print( repeat(" ", 20) + "\\" + repeat( "-", 60 ) + "/" );
-    
+    print( repeat(" ", 20) + "\\" + repeat( "-", 60 ) + "/\n" );
+
     for ( Tweet tweet in tweets ) {
       print( tweet.text );
       print( "-- \n @" + tweet.userName + ' ' + tweet.timeAgo );
       print( '\n' );
     }
-    
+
     print( repeat( "\n", terminalHeight - tweetHeight * tweets.length ) );
   });
 }
